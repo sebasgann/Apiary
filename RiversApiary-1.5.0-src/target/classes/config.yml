@@ -1,0 +1,234 @@
+###################################################################################################
+#  RiversApiary — Configuration File
+#  Version: 1.5.1 (Baseline)
+#
+#  This file defines all plugin behavior, tuning parameters, sounds, particles, and drop chances.
+#  All values here match your latest working plugin build.
+###################################################################################################
+
+###################################################################################################
+# ⏱  COOLDOWNS
+###################################################################################################
+cooldowns:
+  extractionSeconds: 1.0        # Delay between each honey/wax collection
+  soundSeconds: 1.0             # Delay between collection sound plays
+  beeBreadItemSeconds: 2.0      # Delay between feeding Bee Bread
+  beeBreadSoundSeconds: 2.0     # Delay between Bee Bread hum sound
+  smokeSeconds: 60              # Duration that "smoked" state lasts (in seconds)
+
+###################################################################################################
+#   TEMPERAMENT SYSTEM
+###################################################################################################
+temperament:
+  enabled: true
+  base: 0.80                    # Default temperament when a hive is first placed
+  hourlyDecay: 0.01             # Decay per in-game hour
+  onSmoke: 0.10                 # Temperament bonus when smoked
+  onAggression: 0.01            # Temperament loss when aggression triggers
+  onFeedBeeBread: 0.10          # Temperament bonus when fed Bee Bread
+
+  thresholds:                   # Display / behavioral thresholds
+    uneasy: 0.70
+    agitated: 0.30
+
+  agitation:
+    intervalMinSeconds: 240     # Random agitation period (min 4 minutes)
+    intervalMaxSeconds: 300     # Random agitation period (max 5 minutes)
+    durationSeconds: 10         # How long bees remain aggressive during agitation
+
+  collapse:                     # Behavior when T reaches 0
+    atZero:
+      removeQueenState: true    # Remove queen when temperament fully collapses
+      disableWorkerRegen: true  # Stop new worker generation
+      freeHarvest: true         # Allow safe collection when hive is "collapsed"
+      resumeWorkerRegenAboveT: 0.01
+
+  ceiling:
+    baseMax: 1.00
+    bonusMax: 0.20              # From Brood Wax upgrades
+    step: 0.05
+
+###################################################################################################
+#   AGGRESSION SYSTEM
+###################################################################################################
+aggression:
+  recall:
+    targetRadius: 12.0          # Radius to find secondary players to attack
+    lifetimeSeconds: 10         # How long aggressive bees persist (seconds)
+    damage: 1.0                 # Damage dealt per sting (half-heart = 1.0)
+
+###################################################################################################
+#   PRODUCT DEFINITIONS
+###################################################################################################
+products:
+  honey:
+    material: HONEY_BOTTLE
+    display: "§eHoney"
+    key: "product"
+    val: "honey"
+    lore:
+      - "§7Sunlight, slowed to a pour."
+
+  beeswax:
+    material: HONEYCOMB
+    display: "§eBeeswax"
+    key: "product"
+    val: "beeswax"
+    lore:
+      - "§7Warm gold with thumbprints of flight."
+
+  royalJelly:
+    material: HONEYCOMB
+    display: "§eRoyal Jelly"
+    key: "product"
+    val: "royal_jelly"
+    lore:
+      - "§7Sharp and sweet, the heart of a hive."
+
+  beeBread:
+    material: GOLD_NUGGET
+    display: "§eBee Bread"
+    key: "beebread"
+    val: "1"
+    lore:
+      - "§7Pollen pressed into a summer loaf."
+
+###################################################################################################
+# 🛠  ITEMS (TOOLS, UPGRADES, COMPONENTS)
+###################################################################################################
+items:
+  smoker:
+    material: LANTERN
+    display: "§eBee Smoker"
+    key: "smoker"
+    val: "1"
+    unplaceable: true
+    lore:
+      - "§7Warm breath of the embers."
+      - "§7Smoke curls like a tame ghost."
+
+  queenCage:
+    material: NOTEBLOCK
+    display: "§eQueen Bee Cage"
+    key: "queen_cage"
+    val: "1"
+    unplaceable: true
+    lore:
+      - "§7Woven soundwood, quiet and sure."
+
+###################################################################################################
+#   UPGRADES & REAGENTS
+###################################################################################################
+upgrades:
+  pollen:
+    material: YELLOW_DYE
+    display: "§ePollen"
+    key: "reagent"
+    val: "pollen"
+    lore:
+      - "§7Amber dust that coaxes combs."
+    capacityHoney: 16
+    capOverBase: 64
+
+  propolis:
+    material: RESIN_CLUMP
+    display: "§ePropolis"
+    key: "reagent"
+    val: "propolis"
+    lore:
+      - "§7Tree resin thick with forest news."
+    capacityWax: 16
+    capOverBase: 64
+
+  brood_wax:
+    material: GLOWSTONE_DUST
+    display: "§eBrood Wax"
+    key: "reagent"
+    val: "brood_wax"
+    lore:
+      - "§7The hush of the nursery sealed in wax."
+    temperamentMaxBonus: 0.05
+    cap: 0.20
+
+###################################################################################################
+#   QUEENS & INCUBATION
+###################################################################################################
+queens:
+  incubationSeconds: 60         # Time for Royal Jelly to produce a queen
+  species:
+    apidae:
+      display: "§eApidae Queen Bee"
+      lore:
+        - "§7Gentle hum of harmony, keeper of peace."
+      behavior: "pacifist"
+    colletidae:
+      display: "§eColletidae Queen Bee"
+      lore:
+        - "§7Her swarm surges with restless zeal."
+      behavior: "fury"
+    megachilidae:
+      display: "§eMegachilidae Queen Bee"
+      lore:
+        - "§7Tenders every sprout and bud."
+      behavior: "forager"
+
+###################################################################################################
+#   FORAGING & ENVIRONMENTAL EFFECTS
+###################################################################################################
+foraging:
+  managed:
+    flowers: true
+    cropsAllAges: true
+    cropGrowthChance: 1.0
+    perBlockCooldownSeconds: 30
+  wild:
+    flowers: true
+    cropsAllAges: false
+  frontier:
+    flowers: true
+    cropsAllAges: false
+
+###################################################################################################
+#   LOOT TABLES (HONEY & WAX COLLECTION)
+###################################################################################################
+lootTables:
+  honey:
+    crystallized_pollen: { material: GLOWSTONE_DUST, chancePercent: 0.01 }
+    honeycomb_cap:       { material: HONEYCOMB_BLOCK, chancePercent: 0.01 }
+    royal_jelly:         { material: HONEYCOMB, chancePercent: 0.25 }
+
+  wax:
+    propolis_cap:        { material: RESIN_CLUMP, chancePercent: 0.01 }
+    brood_wax:           { material: GLOWSTONE_DUST, chancePercent: 0.01 }
+    bee_bread:           { material: GOLD_NUGGET, chancePercent: 10.0 }
+
+###################################################################################################
+#   SOUNDS (EVENT-DRIVEN)
+###################################################################################################
+sounds:
+  smoke: BLOCK_CAMPFIRE_CRACKLE
+  honey: ITEM_BOTTLE_FILL
+  wax: BLOCK_BEEHIVE_SHEAR
+  upgrade: BLOCK_HONEY_BLOCK_SLIDE
+  feed: ENTITY_BEE_POLLINATE
+  sting: ENTITY_BEE_STING
+  aggroLoop: ENTITY_BEE_LOOP_AGGRESSIVE
+  place: BLOCK_BEEHIVE_ENTER
+
+###################################################################################################
+#   PARTICLES (VISUAL EFFECTS)
+###################################################################################################
+particles:
+  smoke: CAMPFIRE_COSY_SMOKE
+  honey: FALLING_HONEY
+  wax: CLOUD
+  upgrade1: HAPPY_VILLAGER
+  upgrade2: CRIT
+  atCap: SMOKE_NORMAL
+  feed: WAX_ON
+  aggroSpawn1: ANGRY_VILLAGER
+  aggroSpawn2: SMOKE_NORMAL
+  queenInstall: FALLING_HONEY
+  queenRemove: SWEEP_ATTACK
+  megachilidaeTrail: FALLING_NECTAR
+  cropGrowth: SCRAPE
