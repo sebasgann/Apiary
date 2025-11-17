@@ -1,0 +1,15 @@
+name: RiversApiary
+main: com.lotc.apiaries.ApiaryPlugin
+version: 1.0
+api-version: '1.21'
+author: RiverBird
+description: Lord of the Craft - Apiaries
+website: https://github.com/sebasgann
+
+commands:
+  apiary:
+    description: Apiary administration and item giver
+    usage: /apiary give <item> [amount]
+permissions:
+  riversapiary.use:
+    default: op
