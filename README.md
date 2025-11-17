@@ -1,2 +1,0 @@
-# Apiary
-Apiary Plugin
